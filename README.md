@@ -10,6 +10,8 @@ Example usage:
 - Average length of a user's message
 - Number of times a user says "lol"
 
+As well, there is now Image support! Run get_pic.py afterward to download the images to your local directory. Note: Zip Compression is not supported yet, so hold off of that for a little bit.
+
 
 Getting Access Token
 --------------
@@ -26,3 +28,4 @@ Instructions
 1. Get your GroupMe Access Token using the instructions above.
 2. Run ```retrieve_msgs.py```, pass in your access token, and follow the command line interface to download your GroupMe messages to a CSV file.
 3. Run ```run_stats.py``` and pass in your CSV file to display some simple stats about your messages.
+4. Run ```get_pic.py``` to obtain all images in your group.
