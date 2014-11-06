@@ -124,6 +124,7 @@ def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 	print("Counting messages for " + str(getGroupName(group_id))+" (out of "+str(totalCount)+")")
 	curCount = 0
 	users = {}
+	pic = ""
 	lastMsgId = str(int(getLastMsgId(group_id))+1) # get current msg as well
 	while (curCount < totalCount):
 		if curCount % 100 == 0:
@@ -137,6 +138,12 @@ def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 			#print(type(created_at))
 			user = msg['name']
 			text = msg['text']
+			attach = msg["attachments"]
+			for att in attach:
+				if att["type"] == "image":
+					pic = att["url"]
+					break
+
 			if text is None:
 				text = ""
 			if user is None:
@@ -146,10 +153,12 @@ def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 			if user not in users:
 				users[user] = []
 			if csv_file:
-				wr.writerow([created_at, user, text])
+				wr.writerow([created_at, user, text, pic])
 			if processTextFunc is not None:
 				data = processTextFunc(msg)
 				users[user].append(data)
+			pic = ""
+
 		lastMsgId = msgs['messages'][-1]['id']
 	return curCount, users
 
