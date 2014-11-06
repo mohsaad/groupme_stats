@@ -116,12 +116,12 @@ sinceTs: only process messages after this timestamp
 """
 def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 	if csv_file:
-		f = open(csv_file, "wb")
+		f = open(csv_file, "wt")
 		wr = csv.writer(f, dialect="excel")
 	if type(sinceTs) == datetime.datetime:
 		sinceTs = int(sinceTs.strftime("%s"))
 	totalCount = getGroupCount(group_id)
-	print("Counting messages for" + getGroupName(group_id)+"( out of"+totalCount+")")
+	print("Counting messages for " + str(getGroupName(group_id))+" (out of "+str(totalCount)+")")
 	curCount = 0
 	users = {}
 	lastMsgId = str(int(getLastMsgId(group_id))+1) # get current msg as well
@@ -130,10 +130,11 @@ def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 			print(curCount)
 		msgs = getMessages(group_id, lastMsgId)
 		for msg in msgs['messages']:
-			if msg['created_at'] < sinceTs:
-				return users
+			#if msg['created_at'] < sinceTs:
+			#	return users
 			curCount += 1
 			created_at = datetime.datetime.fromtimestamp(msg['created_at']).strftime('%Y-%m-%d %H:%M:%S')
+			#print(type(created_at))
 			user = msg['name']
 			text = msg['text']
 			if text is None:
@@ -145,7 +146,7 @@ def countMsgs(group_id, csv_file=None, processTextFunc=None, sinceTs=None):
 			if user not in users:
 				users[user] = []
 			if csv_file:
-				wr.writerow([created_at.encode('utf-8'), user.encode('utf-8'), text.encode('utf-8')])
+				wr.writerow([created_at, user, text])
 			if processTextFunc is not None:
 				data = processTextFunc(msg)
 				users[user].append(data)
