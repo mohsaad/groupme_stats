@@ -10,6 +10,7 @@ Example usage:
 - Average length of a user's message
 - Number of times a user says "lol"
 
+
 Getting Access Token
 --------------
 In order to download GroupMe messages, you need an unique access token provided to you by GroupMe. To get this, log into GroupMe's <a href="https://dev.groupme.com" target="_blank">Developers</a> website and create a sample Application. You should then be given a 32-bit access token.
@@ -17,6 +18,8 @@ In order to download GroupMe messages, you need an unique access token provided 
 Dependencies
 --------------
 You need to install Python's <a href="http://docs.python-requests.org/en/latest/" target="_blank">request</a> library: ```pip install request```
+
+retrieve_msgs.py now works on Python 3.4, but run_stats.py does not as of yet.
 
 Instructions
 --------------
